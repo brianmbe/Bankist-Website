@@ -46,10 +46,8 @@ btnScollTo.addEventListener('click', e => {
 });
 
 // MENU / PAGE (event) DELEGATION! on the menu links for a smooth scroll
-
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
-
   // Matching the current click strategy with delegation
   if (e.target.classList.contains('nav__link')) {
     const currentId = e.target.getAttribute('href');
@@ -67,18 +65,115 @@ tabContainer.addEventListener('click', function (e) {
   //remove the active tab class b4adding the activ class to the active
   tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
   // removing the active content first
-  tabContent.forEach(content =>
-    content.classList.remove('operations__content--active')
-  );
+  tabContent.forEach(content => {
+    content.classList.remove('operations__content--active');
+  });
 
   clicked.classList.add('operations__tab--active');
   //Activating content area!
   document
-    .querySelector(`operations__content--${clicked.dataset.tab}`)
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+// MENU FADE ANIMATION
+const hoverHandler = function (e) {
+  const links = e.target.classList.contains('nav__link');
+
+  if (links) {
+    const clickedLink = e.target;
+    const linkSiblings = clickedLink
+      .closest('.nav')
+      .querySelectorAll('.nav__link');
+    const logo = clickedLink.closest('.nav').querySelector('img');
+
+    linkSiblings.forEach(el => {
+      if (el !== clickedLink) el.style.opacity = this;
+    });
+    // logo.style.opacity = this;
+  }
+};
+
+nav.addEventListener('mouseover', hoverHandler.bind(0.5));
+nav.addEventListener('mouseout', hoverHandler.bind(1));
+
+///////////////////////////////////////////////////////////////////////
+// -----------------------Intersection observer API--------------------
+// STICKY NAVIGATION
+// Obeserving the header being out of view
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries, _observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+
+headerObserver.observe(header);
 ///////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////
+// Reveal sections
+
+const sections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+sections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+// LAZY LOADING IMAGES!
+const imageTargets = document.querySelectorAll('img[data-src]');
+
+const observedImages = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+  //replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener('load', function (e) {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(observedImages, {
+  root: null,
+  threshold: 0,
+  // rootMargin: '200px', // for the user not to realise the lay loading
+});
+
+imageTargets.forEach(img => imgObserver.observe(img));
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
 /**
 
 const h1 = document.querySelector('h1');
@@ -157,4 +252,48 @@ console.log(h1.parentElement.children);
     el.style.padding = '0';
   }
 });
+
+//////////////////////////////////////////////////////////////////
+// STICKY NAVIGATION
+const initialCoords = section1.getBoundingClientRect();
+console.log(initialCoords);
+window.addEventListener('scroll', function (e) {
+  if (window.scrollY > initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+
+or 
+
+const obsCallback = function (entries, _observer) {
+  entries.forEach(entry => {
+    console.log(entry);
+  });
+};
+
+const obsOptions = {
+  root: null,
+  treshold: [0, 0.2, 0.5],
+};
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1);
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
 */
