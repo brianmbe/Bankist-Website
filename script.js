@@ -233,6 +233,7 @@ imageTargets.forEach(img => imgObserver.observe(img));
     activateActiveDot(currentSlide);
   };
 
+  // Previous slide
   const previousSlide = function () {
     if (currentSlide === 0) {
       currentSlide = maxSLide - 1;
