@@ -256,5 +256,7 @@ imageTargets.forEach(img => imgObserver.observe(img));
       activateActiveDot(slide);
     }
   });
+
+  setInterval(nextSlide, 5000);
 })();
 ////////////////////////////////////////////////////////////////
