@@ -140,7 +140,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 sections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 });
 ////////////////////////////////////////////////////////////////
 
@@ -171,6 +171,52 @@ imageTargets.forEach(img => imgObserver.observe(img));
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
+// Slider (Testimonial)
+const slides = document.querySelectorAll('.slide');
+const slider = document.querySelector('.slider');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let currentSlide = 0;
+const maxSLide = slides.length;
+
+slides.forEach(
+  (slide, i) => (slide.style.transform = `translateX(${100 * i}%)`)
+);
+
+function gotoSlide(slide) {
+  slides.forEach(
+    (sl, i) => (sl.style.transform = `translateX(${100 * (i - slide)}%)`)
+  );
+}
+
+gotoSlide(currentSlide);
+
+// Next slide
+const nextSlide = function () {
+  if (currentSlide === maxSLide - 1) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  }
+  // 0%, 100%, 200%, 300%
+  gotoSlide(currentSlide);
+};
+
+const previousSlide = function () {
+  if (currentSlide === 0) {
+    currentSlide = maxSLide - 1;
+  } else {
+    currentSlide--;
+  }
+
+  gotoSlide(currentSlide);
+};
+
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', previousSlide);
+
+//
 ////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
