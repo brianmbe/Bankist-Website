@@ -103,3 +103,128 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     bubbleId.scrollIntoView({ behavior: 'smooth' });
   }
 });
+
+////////////////////////////////////////////////////////////////
+/**
+
+const h1 = document.querySelector('h1');
+
+// h1.addEventListener('mouseenter', () => {
+//   alert('Mouse is on!');
+// });
+
+const alertH1 = function (e) {
+  alert('An adeventListener');
+};
+
+h1.addEventListener('mouseenter', alertH1);
+
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+const randomInt = (min, max) =>
+Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = () =>
+  `rgba(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+
+navLink.addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log(e.target, e.currentTarget);
+  
+  // Stopping the event propagation
+  e.stopImmediatePropagation();
+});
+
+navLinks.addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log(e.target, e.currentTarget);
+});
+
+nav.addEventListener(
+  'click',
+  function (e) {
+    this.style.backgroundColor = randomColor();
+    console.log(e.target, e.currentTarget);
+  },
+  true
+  );
+  
+  */
+
+// DOM traversing
+
+/* 
+//going downwards while
+const h1 = document.querySelector('h1');
+// child elements downwards!
+console.log(h1.querySelectorAll('.highlight'));
+console.log(h1.children);
+document.querySelector('h1').firstElementChild.style.color = '#FFF';
+document.querySelector('h1').lastElementChild.style.color = 'orangered';
+
+// going upwards
+console.log(document.querySelector('h1').parentNode);
+console.log(document.querySelector('h1').parentElement);
+
+h1.closest('.header').style.backgroundColor = 'var(--color-secondary)';
+h1.closest('h1').style.backgroundColor = 'var(--color-tertiary)';
+
+// Going sideways
+console.log(h1.previousElementSibling);
+h1.nextElementSibling.style.backgroundColor = 'var(--color-primary)';
+h1.nextElementSibling.style.padding = '2rem';
+console.log(h1.nextElementSibling);
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+console.log(h1.parentElement.children);
+[...h1.parentElement.children].forEach(el => {
+  if (el !== h1) {
+    el.style.transform = 'scale(0.5)';
+    el.style.padding = '0';
+  }
+});
+
+//////////////////////////////////////////////////////////////////
+// STICKY NAVIGATION
+const initialCoords = section1.getBoundingClientRect();
+console.log(initialCoords);
+window.addEventListener('scroll', function (e) {
+  if (window.scrollY > initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+
+or 
+
+const obsCallback = function (entries, _observer) {
+  entries.forEach(entry => {
+    console.log(entry);
+  });
+};
+
+const obsOptions = {
+  root: null,
+  treshold: [0, 0.2, 0.5],
+};
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1);
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+*/
